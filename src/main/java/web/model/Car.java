@@ -1,9 +1,9 @@
 package web.model;
 
 public class Car {
-    int id;
-    String model;
-    String color;
+    private int id;
+    private String model;
+    private String color;
 
     public int getId() {
         return id;
