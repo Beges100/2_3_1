@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Users</title>
+</head>
+<body>
+<table>
+    <thead>
+    <tr>
+        <th scope="col">ID</th>
+        <th scope="col">Name</th>
+        <th scope="col">Surname</th>
+        <th scope="col">Age</th>
+        <th scope="col">Operations</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <div th:each="user : ${allUsers}">
+        <tr>
+            <th scope="row" th:text="${user.getId()}">id</th>
+            <td th:text="${user.getName()}">Name</td>
+            <td th:text="${user.getSurname()}">Surname</td>
+            <td th:text="${user.getAge()}">Age</td>
+            <td th:onsubmit="Edit"><button>Edit</button><button>Delete</button></td>
+        </tr>
+    </div>
+        <form action="/new">
+            <button type="submit">Add new user</button>
+        </form>
+    </tbody>
+
+
+</table>
+</body>
+</html>
