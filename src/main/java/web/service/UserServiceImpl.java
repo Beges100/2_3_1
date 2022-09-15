@@ -17,9 +17,15 @@ public class UserServiceImpl implements UserService{
         this.userDao = userDao;
     }
 
-    @Override
-    public void dropUsersTable() {
 
+    @Override
+    public void updateUser(int id, User user) {
+        userDao.updateUser(id, user);
+    }
+
+    @Override
+    public User getUserAtId(int id) {
+        return userDao.getUserAtId(id);
     }
 
     @Override
@@ -28,8 +34,8 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public void removeUserById(long id) {
-
+    public void removeUserById(int id) {
+        userDao.removeUserById(id);
     }
 
     @Override
@@ -37,8 +43,5 @@ public class UserServiceImpl implements UserService{
         return userDao.getAllUsers();
     }
 
-    @Override
-    public void cleanUsersTable() {
 
-    }
 }

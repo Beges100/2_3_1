@@ -5,9 +5,7 @@ import org.springframework.transaction.annotation.Transactional;
 import web.model.User;
 
 import javax.persistence.EntityManager;
-
 import javax.persistence.PersistenceContext;
-import javax.persistence.TypedQuery;
 import java.util.List;
 
 @Repository
@@ -18,15 +16,17 @@ public class UserDaoImpl implements UserDao {
 
 
     @Override
-    public void dropUsersTable() {
-//        String drop = "DROP TABLE IF EXISTS User ";
-//        try (Session session = Util.getSession()) {
-//            session.beginTransaction();
-//            session.createSQLQuery(drop).executeUpdate();
-//            session.getTransaction().commit();
-//        } catch (HibernateException e) {
-//            e.printStackTrace();
-//        }
+    public void updateUser(int id, User user) {
+        User findedUser = entityManager.find(User.class, id);
+
+        findedUser.setAge(user.getAge());
+        findedUser.setName(user.getName());
+        findedUser.setSurname(user.getSurname());
+    }
+
+    @Override
+    public User getUserAtId(int id) {
+        return entityManager.find(User.class, id);
     }
 
     @Override
@@ -35,36 +35,16 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public void removeUserById(long id) {
-//        String sqlDeleteString = "delete User where id = :param";
-//        try (Session session = Util.getSession()) {
-//            session.beginTransaction();
-//            User user = session.get(User.class, id);
-//            session.delete(user);
-//            session.getTransaction().commit();
-//        } catch (HibernateException e) {
-//            e.printStackTrace();
-//        }
-        User user = entityManager.find(User.class, id);
-        entityManager.remove(user);
+    public void removeUserById(int id) {
+        entityManager.remove(getUserAtId(id));
 
     }
+
     @Override
     @Transactional(readOnly = true)
     public List<User> getAllUsers() {
 
-        return (List<User>) entityManager.createQuery("select u from User u", User.class).getResultList();
+        return entityManager.createQuery("select u from User u", User.class).getResultList();
     }
 
-    @Override
-    public void cleanUsersTable() {
-//        try (Session session = Util.getSession()) {
-//            session.beginTransaction();
-//            String hql = String.format("delete from User");
-//            session.createQuery(hql).executeUpdate();
-//            session.getTransaction().commit();
-//        } catch (HibernateException e) {
-//            e.printStackTrace();
-//        }
-    }
 }

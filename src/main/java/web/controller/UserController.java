@@ -1,6 +1,7 @@
 package web.controller;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import web.model.User;
@@ -23,10 +24,10 @@ public class UserController {
         return "new";
     }
 
-    @PostMapping
+    @PostMapping("/saveUser")
     public String saveUser(@ModelAttribute("user") User user) {
         userService.saveUser(user);
-        return "redirect:/users";
+        return "redirect:/";
     }
 
 
@@ -37,7 +38,25 @@ public class UserController {
         return "users";
     }
 
+    @DeleteMapping("/{id}")
+    public String deleteUser(@PathVariable("id") int id) {
+        userService.removeUserById(id);
+
+        return "redirect:/";
+    }
+
+    @PatchMapping("/{id}")
+    public String update(@ModelAttribute("user") User user, @PathVariable("id") int id) {
+        userService.updateUser(id, user);
+
+        return "redirect:/";
+    }
+
+    @GetMapping("/{id}/edit")
+    public String edit(Model model, @PathVariable("id") int id) {
+        model.addAttribute("user", userService.getUserAtId(id));
+
+        return "/edit";
+    }
+
 }
-//, @RequestParam(value = "name", required = false) String name,
-//@RequestParam(value = "surname", required = false) String surname,
-//@RequestParam(value = "age",required = false) int age

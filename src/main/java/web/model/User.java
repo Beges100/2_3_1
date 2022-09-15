@@ -17,12 +17,12 @@ public class User {
     private String surname;
 
     @Column
-    private int age;
+    private String age;
 
     public User() {
     }
 
-    public User(String name, String surname, int age) {
+    public User(String name, String surname, String age) {
         this.name = name;
         this.surname = surname;
         this.age = age;
@@ -52,11 +52,11 @@ public class User {
         this.surname = surname;
     }
 
-    public int getAge() {
+    public String getAge() {
         return age;
     }
 
-    public void setAge(Byte age) {
+    public void setAge(String age) {
         this.age = age;
     }
 }
