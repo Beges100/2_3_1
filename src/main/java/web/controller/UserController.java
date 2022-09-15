@@ -7,6 +7,7 @@ import web.model.User;
 import web.service.UserService;
 
 @Controller
+@RequestMapping()
 public class UserController {
 
     private final UserService userService;
@@ -17,21 +18,19 @@ public class UserController {
 
     @RequestMapping("/new")
     public String createUser(ModelMap model) {
-        User user = new User();
-        model.addAttribute("user", user);
-
-
+        model.addAttribute("user", new User());
+        
         return "new";
     }
 
-    @PostMapping("/saveUser")
+    @PostMapping
     public String saveUser(@ModelAttribute("user") User user) {
         userService.saveUser(user);
         return "redirect:/users";
     }
 
 
-    @RequestMapping("/users")
+    @RequestMapping("/")
     public String printUsers(ModelMap model) {
             model.addAttribute("allUsers", userService.getAllUsers());
 
